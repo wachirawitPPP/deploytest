@@ -10,7 +10,7 @@ import {HeaderComponent} from '@modules/main/header/header.component';
 import {FooterComponent} from '@modules/main/footer/footer.component';
 import {MenuSidebarComponent} from '@modules/main/menu-sidebar/menu-sidebar.component';
 import {BlankComponent} from '@pages/blank/blank.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProfileComponent} from '@pages/profile/profile.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from '@modules/register/register.component';
@@ -36,6 +36,13 @@ import {ProfabricComponentsModule} from '@profabric/angular-components';
 import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxGoogleAnalyticsModule} from 'ngx-google-analytics';
 import { environment } from 'environments/environment';
+import { ProductListComponent } from '@pages/main-menu/product-list/product-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BlockUIModule } from 'ng-block-ui';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -61,11 +68,16 @@ registerLocaleData(localeEn, 'en-EN');
         SubMenuComponent,
         MenuItemComponent,
         ControlSidebarComponent,
-        SidebarSearchComponent
+        SidebarSearchComponent,
+        ProductListComponent,
+        
     ],
     imports: [
+        
         ProfabricComponentsModule,
         CommonModule,
+        FormsModule,
+        BlockUIModule.forRoot(),
         BrowserModule,
         StoreModule.forRoot({auth: authReducer, ui: uiReducer}),
         HttpClientModule,
@@ -77,9 +89,16 @@ registerLocaleData(localeEn, 'en-EN');
             positionClass: 'toast-top-right',
             preventDuplicates: true
         }),
-        NgxGoogleAnalyticsModule.forRoot(environment.GA_ID)
+        NgxGoogleAnalyticsModule.forRoot(environment.GA_ID),
+        NgbModule,
+        AngularFirestoreModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig)
+       
+        
+         
+        
     ],
-    providers: [],
+    providers: [AngularFirestoreModule],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
